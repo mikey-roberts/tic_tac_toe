@@ -10,8 +10,8 @@
   class Game
     attr_accessor :lines, :player, :symbol, :index, :active
     def initialize
-    @active = true
-    @lines = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      @active = true
+      @lines = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   end
 # lining up the values of the array for the UI #
     def show_board
@@ -51,5 +51,4 @@
   first_go, second_go = player_shuffle(px,po)
   puts "#{first_go.name} goes first. Place your #{first_go.symbol}"
 # Choice of position #
-  p first_go.name
-  p second_go.name
+  start.assign_position(first_go)

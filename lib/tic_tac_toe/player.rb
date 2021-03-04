@@ -1,4 +1,4 @@
-# initialisation of player1 + player 2 name #
+  # initialisation of player + name #
   class Player
     attr_reader :name, :symbol
     def initialize(name, symbol)
