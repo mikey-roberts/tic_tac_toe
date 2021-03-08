@@ -3,11 +3,7 @@
   module Interface
 
     def start_game
-      "Welcome let's play a game of TicTacToe Player"
-    end
-
-    def player_name
-      "what is your name?"
+      puts "Welcome let's play a game of TicTacToe Player"
     end
 
     def player_input
@@ -15,10 +11,10 @@
     end
 
     def player_wins
-      "Well done #{self.name}. You have completed the game."
+      "Well done #{player.name}. You have completed the game."
     end
 
     def player_draw
-      "It's a draw."
+      puts "It's a draw."
     end
   end
