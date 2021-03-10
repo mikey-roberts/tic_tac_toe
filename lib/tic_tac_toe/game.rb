@@ -1,10 +1,12 @@
-# Classes + UI + Logic modules #
+# Classes + additional modules #
   require_relative 'Interface.rb'
   require_relative 'Player.rb'
   require_relative 'Logic.rb'
   include Interface
   include Logic
 # player must match any of the WIN_LINES to win the game #
+
+
   WIN_LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 # Game class contains the logic to start the game #
   class Game
@@ -25,15 +27,22 @@
     end
 
     def draw
-      @lines.uniq.length == 2
+      if @lines.uniq.length == 2
+      end
     end
 
-    def win(lines)
-    return player.name if WIN_LINES.any? do |line|
-      line.all? { |lines| @lines == player.symbol }
+    def player_won(player)
+      WIN_LINES.any? do |line|
+          line.all? {|x| @lines[x] == player.symbol}
+        end
+      end
     end
-  end
-end
+  #  def win(lines)
+  #  return player.name if WIN_LINES.any? do |line|
+    #  line.all? { |lines| @lines == player.symbol }
+  #  end
+#  end
+#end
 # Introduction #
   start_game
   sleep(1)
@@ -55,10 +64,24 @@ end
   sleep(1)
 # Choice of position #
   #draw_condition
-  while start.draw == FALSE do
+
+  loop do
+
   start.pos_ob(first_player)
-  start.pos_ob(second_player)
-#  end
+
+  if start.draw == TRUE
+    "It's a draw!"
+    show_board
+  elsif start.player_won(first_player) == TRUE
+    "#{first_player.name} is the WINNER!"
   end
 
-  player_draw
+  start.pos_ob(second_player)
+
+  if start.draw == TRUE
+    "It's a draw!"
+    show_board
+  elsif start.player_won(second_player) == TRUE
+    "#{second_player.name} is the WINNER!"
+    end
+  end

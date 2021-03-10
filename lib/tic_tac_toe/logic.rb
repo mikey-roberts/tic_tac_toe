@@ -19,34 +19,30 @@
 
   def pos_ob(player)
     puts "#{player.name}. Place your #{player.symbol}"
-    index = gets.chomp.to_i - 1
-    nums = [1,2,3,4,5,6,7,8,9]
-    if @lines.none?(index)
-      puts "puts That's not a valid move!"
-      pos_ob(player)
-
-    elsif
-     @lines[index] == "X"
-      puts "That's not a valid move!"
+    index = gets.chomp.to_i
+    if duplicate_position(index) || invalid_position(index)
+      puts "Invalid position. Try between 1-9!"
       pos_ob(player)
     else
-      @lines[index] = player.symbol
+      @lines[index-1] = player.symbol
       show_board
       end
     end
   end
-
-
+# Validation to check if board position has been utilised #
   def duplicate_position(index)
-    @lines[index] == "X"
+    @lines[index-1] == "X" || @lines[index-1] == "O"
     end
-
-  def invalid_position
-
+# Validation to make sure the position is valid between 1-9 #
+  def invalid_position(index)
+    nums = [1,2,3,4,5,6,7,8,9]
+    unless nums.include?(index)
+      TRUE
     end
-
+  end
+# Condition requirements to win #
   def win_condition
-    return player.name if WIN_LINES.any? do |line|
+    return "#{player.name} is the winner!" if WIN_LINES.any? do |line|
       line.all? { |lines| @lines == player.symbol }
     end
   end
