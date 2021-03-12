@@ -4,18 +4,15 @@
   require_relative 'Logic.rb'
   include Interface
   include Logic
-# player must match any of the WIN_LINES to win the game #
-
-
-  WIN_LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
+# Player must match any of the WIN_LINES to win the game #
+  WIN_LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
 # Game class contains the logic to start the game #
   class Game
     attr_accessor :lines, :player, :symbol, :index, :active, :game
     def initialize
-      @active = TRUE
       @lines = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   end
-# lining up the values of the array for the UI #
+# Lining up the values of the array for the UI #
     def show_board
       puts ""
       puts "  #{@lines[0]}  |  #{@lines[1]}  |  #{@lines[2]} "
@@ -25,24 +22,17 @@
       puts "  #{@lines[6]}  |  #{@lines[7]}  |  #{@lines[8]} "
       puts ""
     end
-
+# Checks to see if 2 unique values on the board to confirm draw scenario #
     def draw
-      if @lines.uniq.length == 2
-      end
+      @lines.uniq.length == 2
     end
-
+# Selected player has won the game. Iterates over win combos for truthy value against player symbol #
     def player_won(player)
       WIN_LINES.any? do |line|
           line.all? {|x| @lines[x] == player.symbol}
         end
       end
     end
-  #  def win(lines)
-  #  return player.name if WIN_LINES.any? do |line|
-    #  line.all? { |lines| @lines == player.symbol }
-  #  end
-#  end
-#end
 # Introduction #
   start_game
   sleep(1)
@@ -62,26 +52,22 @@
   first_player, second_player = player_shuffle(px,po)
   puts "After shuffling, #{first_player.name} goes first."
   sleep(1)
-# Choice of position #
-  #draw_condition
-
+# Loop for players to choose their positions #
   loop do
-
+# First player select position #
   start.pos_ob(first_player)
-
-  if start.draw == TRUE
-    "It's a draw!"
-    show_board
-  elsif start.player_won(first_player) == TRUE
-    "#{first_player.name} is the WINNER!"
+# If draw or win criteria met then game over #
+  if start.player_won(first_player) == TRUE
+    return player_wins(first_player)
+  elsif start.draw == TRUE
+      return player_draw
   end
-
+# Second player goes next #
   start.pos_ob(second_player)
-
-  if start.draw == TRUE
-    "It's a draw!"
-    show_board
-  elsif start.player_won(second_player) == TRUE
-    "#{second_player.name} is the WINNER!"
-    end
+# If draw or win criteria met then game over #
+  if start.player_won(second_player) == TRUE
+    return player_wins(second_player)
+  elsif start.draw == TRUE
+      return player_draw
   end
+end
